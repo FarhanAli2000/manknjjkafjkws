@@ -1,75 +1,166 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const LoginScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoidingView}
+      >
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          
+          <Text style={styles.welcomeText}>Welcome to Bahria Town Career Portal</Text>
+          <Text style={styles.loginText}>Login in to your account</Text>
+          
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.loginButtonText}>Login</Text>
+            </TouchableOpacity>
+            
+            <View style={styles.forgotPasswordContainer}>
+              <Text style={styles.forgotPasswordText}>Forgot Password? </Text>
+              <TouchableOpacity>
+                <Text style={styles.clickHereText}>click here</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <TouchableOpacity style={styles.createAccountButton}>
+              <Text style={styles.createAccountText}>Create an Account</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
-}
+};
+
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
     alignItems: 'center',
-    gap: 8,
+    paddingVertical: 40,
+    paddingHorizontal: 20,
   },
-  stepContainer: {
-    gap: 8,
+  logoContainer: {
+    marginBottom: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    tintColor: '#D4AF37', // Gold color for the logo
+  },
+  welcomeText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#666',
     marginBottom: 8,
+    textAlign: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  loginText: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    width: '100%',
+    maxWidth: 350,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
+    marginBottom: 15,
+    paddingHorizontal: 15,
+    backgroundColor: '#fff',
+  },
+  loginButton: {
+    backgroundColor: '#1ABC9C', // Teal/green color
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    marginBottom: 15,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  forgotPasswordContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  forgotPasswordText: {
+    color: '#888',
+    fontSize: 14,
+  },
+  clickHereText: {
+    color: '#666',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  createAccountButton: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  createAccountText: {
+    color: '#666',
+    fontSize: 16,
   },
 });
+
+export default LoginScreen;
